@@ -40,3 +40,8 @@ Another approach would be to use [Data.List.Split](https://hackage.haskell.org/p
     > chunksOf 3 ['a'..'z']
     ["abc","def","ghi","jkl","mno","pqr","stu","vwx","yz"]
 
+# PCRE - Perl Compatible Regular Expressions
+
+For MacOS on Apple M1, install pcre with homebrew first to avoid build error. 
+
+    brew install pcre pcre++
