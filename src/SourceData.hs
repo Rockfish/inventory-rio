@@ -3,10 +3,8 @@
 module SourceData where
 
 import           Data.Aeson
-import           Data.ByteString.Lazy (readFile, putStrLn)
-import           GHC.Generics
-import qualified RIO.Map              as Map
-import           RIO.Text
+import           Data.ByteString.Lazy (readFile)
+import  Data.ByteString.Lazy.Char8 (lines)
 
 
 testJson :: IO ()
@@ -14,8 +12,18 @@ testJson = do
     let val = decode "{ \"foo\": false, \"bar\": [1, 2, 3], \"name\": \"Charlie\" }" :: Maybe Value
     print val
 
+printFile :: String -> IO ()
+printFile filename = do
+    content <- Data.ByteString.Lazy.readFile filename
+    print content
+
 printJson :: String -> IO ()
 printJson filename = do
-    content <- readFile filename
-    let val = decode content
-    putStrLn $ show val
+    content <- Data.ByteString.Lazy.readFile filename
+    let contentLines = Data.ByteString.Lazy.Char8.lines content 
+    mapM_ go contentLines
+    where 
+        go content = do 
+            let val = decode content :: Maybe Value 
+            print val
+        

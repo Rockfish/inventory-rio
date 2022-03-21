@@ -6,7 +6,7 @@
 module Run (run) where
 
 import           Import
-import SourceData ( printJson )
+import SourceData ( printJson, printFile )
 
 import           Data.Array
 import           Data.List          (head, tail)
@@ -33,9 +33,11 @@ run = do
       outputPath = outputFilePath ops
       envMap = Map.fromList env
       home = fromMaybe "~" (Map.lookup "HOME" envMap)
-      fullSourcePath = home ++ tail sourcePath
-      fullOutputPath = home ++ tail outputPath
+      fullSourcePath = home ++ tail sourcePath ++ "/"
+      fullOutputPath = home ++ tail outputPath ++ "/"
       sourceFiles = getFilelist fullSourcePath
+      files = do
+          map (fullSourcePath ++ ) <$> sourceFiles
 
   logInfo $ "Home: " <> fromString home
   logInfo $ "Source folder: " <> fromString fullSourcePath
@@ -44,12 +46,11 @@ run = do
   liftIO $ showFilelist sourceFiles
   logInfo "\nCollection records:"
   liftIO $ showCollectionRecords sourceFiles
-  liftIO $ showJson sourceFiles
+  liftIO $ showJson files
 
 
 getFilelist :: FilePath -> IO [FilePath]
 getFilelist filepath = do listDirectory filepath
-
 
 showFilelist :: IO [FilePath] -> IO ()
 showFilelist ioFiles = do
@@ -62,6 +63,12 @@ showJson ioFiles = do
   files <- ioFiles
   mapM_ go files
   where go file = printJson file
+
+showFile :: IO [FilePath] -> IO ()
+showFile ioFiles = do
+  files <- ioFiles
+  mapM_ go files
+  where go file = printFile file
 
 showCollectionRecords :: IO [FilePath] -> IO ()
 showCollectionRecords ioFiles = do
