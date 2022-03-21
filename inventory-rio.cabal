@@ -27,6 +27,7 @@ library
   exposed-modules:
       Import
       Run
+      SourceData
       Types
       Util
   other-modules:
@@ -35,8 +36,10 @@ library
       src
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints
   build-depends:
-      array
+      aeson
+    , array
     , base >=4.11 && <10
+    , bytestring
     , regex-base
     , regex-pcre
     , rio >=0.1.12.0
@@ -50,8 +53,10 @@ executable inventory-rio-exe
       app
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      array
+      aeson
+    , array
     , base >=4.11 && <10
+    , bytestring
     , inventory-rio
     , optparse-simple
     , regex-base
@@ -69,8 +74,10 @@ test-suite inventory-rio-test
       test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      array
+      aeson
+    , array
     , base >=4.11 && <10
+    , bytestring
     , hspec
     , inventory-rio
     , regex-base

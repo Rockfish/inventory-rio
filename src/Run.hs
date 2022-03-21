@@ -6,6 +6,7 @@
 module Run (run) where
 
 import           Import
+import SourceData ( printJson )
 
 import           Data.Array
 import           Data.List          (head, tail)
@@ -43,6 +44,7 @@ run = do
   liftIO $ showFilelist sourceFiles
   logInfo "\nCollection records:"
   liftIO $ showCollectionRecords sourceFiles
+  liftIO $ showJson sourceFiles
 
 
 getFilelist :: FilePath -> IO [FilePath]
@@ -55,6 +57,11 @@ showFilelist ioFiles = do
   mapM_ go files
   where go file = print file
 
+showJson :: IO [FilePath] -> IO ()
+showJson ioFiles = do
+  files <- ioFiles
+  mapM_ go files
+  where go file = printJson file
 
 showCollectionRecords :: IO [FilePath] -> IO ()
 showCollectionRecords ioFiles = do

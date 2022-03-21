@@ -25,6 +25,8 @@ dependencies:
 - array
 - regex-base
 - regex-pcre
+- aeson
+- bytestring
 # - raw-strings-qq
 # - regex-tdfa-text
 
